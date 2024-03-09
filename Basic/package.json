@@ -1,12 +1,12 @@
 {
-  "name": "express",
+  "name": "basic",
   "version": "1.0.0",
-  "description": "express",
-  "main": "index.js",
+  "description": "",
+  "main": "first.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Nishu Pal",
+  "author": "Nishu",
   "license": "ISC",
   "dependencies": {
     "express": "^4.18.3"
