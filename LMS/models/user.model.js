@@ -1,6 +1,7 @@
 import mongoose from "mongoose"
 import bcrypt from "bcryptjs"
 import jwt from "jsonwebtoken"
+import crypto from "crypto"
 const userSchema = new mongoose.Schema({
        fullName : {
         type : 'String',
@@ -22,9 +23,9 @@ const userSchema = new mongoose.Schema({
        password:{
         type:'String',
         required : [true,"password is required"],
-        minLength :[6,"password must be at least 6 length"],
+        minLength :[4,"password must be at least 6 length"],
         select : false
-       },
+       }, 
        avatar:{
         public_id : {
             type : 'String'
@@ -38,7 +39,7 @@ const userSchema = new mongoose.Schema({
         enum:['USER','ADMIN'],
         default : 'USER'
        },
-       forgetPasswordToken: 'String',
+       forgotPasswordToken: 'String',
        forgotPasswordExpiry:Date
 },
 {timestamps:true}
@@ -69,6 +70,11 @@ userSchema.methods = {
     },
     comparePassword : async function(plainTextPassword){
         return await bcrypt.compare(plainTextPassword,this.password)
+    },
+    generatePasswordResetToken : async function(){
+        const resetToken = crypto.randomBytes(20).toString('hex')
+        this.forgotPasswordToken = crypto.createHash('Sha256').update(resetToken).digest('hex');
+        this.forgotPasswordExpiry = Date.now()+15*60*1000
     }
 }
 

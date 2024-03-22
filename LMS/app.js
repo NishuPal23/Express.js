@@ -3,10 +3,12 @@ import cors from "cors"
 import cookieParser from "cookie-parser"
 import morgan from "morgan"
 import userRoutes from "./routes/user.routes.js"
+import courseRoutes from "./routes/course.routes.js"
 import errorMiddleware from "./middlewares/error.middleware.js"
 const app = express();
 //to get data of req,body in json form
 app.use(express.json());
+app.use(express.urlencoded({extended:true}));
 //to unable to communicate with frontend also credentials true indicate that cookie allow to navigate
 app.use(cors({
     origin:[process.env.FRONTEND_URL],
@@ -25,6 +27,9 @@ app.use("/ping",function(req,res){
 //userRoutes indicate to routes/user.route.js
 //user releated all api come here
 app.use("/api/vi/user",userRoutes);
+
+//for courses
+app.use("/api/vi/course",courseRoutes);
 
 //if user hit other url other them above 3 then show error
 app.all("*",(req,res)=>{
