@@ -4,6 +4,7 @@ import cookieParser from "cookie-parser"
 import morgan from "morgan"
 import userRoutes from "./routes/user.routes.js"
 import courseRoutes from "./routes/course.routes.js"
+import paymentRoutes from "./routes/payment.routes.js"
 import errorMiddleware from "./middlewares/error.middleware.js"
 const app = express();
 //to get data of req,body in json form
@@ -30,6 +31,9 @@ app.use("/api/vi/user",userRoutes);
 
 //for courses
 app.use("/api/vi/course",courseRoutes);
+
+//for payment
+app.use("/api/vi/payments",paymentRoutes);
 
 //if user hit other url other them above 3 then show error
 app.all("*",(req,res)=>{
